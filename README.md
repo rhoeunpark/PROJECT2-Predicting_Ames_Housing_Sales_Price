@@ -1,184 +1,36 @@
-# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Project 2 - Ames Housing Data and Kaggle Challenge
+# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) 222-Flex Ames Competition - Predicting the Housing Sale Price
 
-Welcome to Project 2! It's time to start modeling.
+# Problem Statement
+Profit of iBuyer companies rely on selling real estate properties at higher prices than the prices that the properties were bought. In such cases, accurate predictions of housing property market prices are key in securing profit from the real estate transactions. This project seeks to explore the various features of housing properties and find out which features can most accurately predict the housing sales prices, specifically for Ames, IA.
 
-**Primary Learning Objectives:**
-1. Creating and iteratively refining a regression model
-2. Using [Kaggle](https://www.kaggle.com/) to practice the modeling process
-3. Providing business insights through reporting and presentation.
 
-You are tasked with creating a regression model based on the Ames Housing Dataset. This model will predict the price of a house at sale.
+# Background
+Buying a house has long been a popular investment option and it is generally believed that buying a home is a great investment. iBuyers are investors that use automated valuation models (AVMs) and other technology to make quick offers on homes, and then resell them ([*source*](https://blog.offerpad.com/what-is-an-ibuyer/?utm_source=google&utm_medium=cpc&utm_campaign=pmax-stlouis&gclid=Cj0KCQjwpImTBhCmARIsAKr58cwChC4Im8uIEXN0Qs36ar3oNoiXC1SO4MU0p6bhAJTNXVI9Wr2bCDUaAlksEALw_wcB)). Such companies profit from buying the property at a lower price than at sale; therefore, in order to secure profit, it is important to be able to accurately predict the market price of the property, so that they can make an offer that is reasonably balance for both the company and the seller. 
+An example of failed case of this is Zillow Offers program; the program announced to "wind down" due to their failure in accurately predicting the home prices and purchasing the properties at a higher than the market sales price([*source*](https://wraltechwire.com/2021/11/02/zillow-unable-to-predict-housing-prices-to-wind-down-offers-program-everywhere/)). 
 
-The Ames Housing Dataset is an exceptionally detailed and robust dataset with over 70 columns of different features relating to houses.
+Home prices are indeed volatile, hugely affected by both intrinsic(quality of the home itself), and extrinsic(economic) factors([*source*](https://www.opendoor.com/w/blog/factors-that-influence-home-value)). Intrinsically, it is generally affected by age, condition, neighborhood, usage space, and etc. This particular project will focus on such intrinsic features as indicators of the housing sale price, and see which features we can look at to accurately predict the housing prices. 
 
-Secondly, we are hosting a competition on Kaggle to give you the opportunity to practice the following skills:
+# Data 
 
-- Refining models over time
-- Use of train-test split, cross-validation, and data with unknown values for the target to simulate the modeling process
-- The use of Kaggle as a place to practice data science
+#### Datasets Used:
+- Ames Housing Data: individual residential properties sold in Ames, IA from 2006 to 2010.
 
-As always, you will be submitting a technical report and a presentation. **You may find that the best model for Kaggle is not the best model to address your data science problem.**
+    * [train.csv](../data/train.csv) - all of the training data for the model. 
+    * [test.csv](../data/test.csv) - the test data for your model used to feed into the regression model to make predictions.
+    
+#### Data Dictionary 
+[*Ames Housing Data Dictionary*](http://jse.amstat.org/v19n3/decock/DataDocumentation.txt)
 
-## Set-up
 
-Before you begin working on this project, please do the following:
+# Analysis
+Using filtering method for feature selection, the model incorporates total of 21 features to predict the housing sale price. The features selected goes along with the general idea that the housing price depends on neighborhood, environment, quality of materials, age of the house, and surface area indicative of the usage space. 
 
-1. Sign up for an account on [Kaggle](https://www.kaggle.com/)
-1. **IMPORTANT**: Click this link ([Regression Challenge Sign Up](https://www.kaggle.com/t/96985d5820ac4be29e5732e815f83a5a)) to **join** the competition (otherwise you will not be able to make submissions!)
-1. Review the material on the [DSIR-222 Regression Challenge](https://www.kaggle.com/c/222-flex-ames/)
-1. Download the [data](https://www.kaggle.com/competitions/222-flex-ames/data)
-1. Review the [data description](http://jse.amstat.org/v19n3/decock/DataDocumentation.txt)
+The type of the final regression model was chosen to be the elastic net regression, which gave the smallest error output by a small number. Polynomial interaction feature of degree=3 was added, as it was found to have the best fit using the grid search. In the end, the final model had about 0.92 training R-squared score and 0.9 testing R-squared score. This indicates that there is more variability than bias. 
 
-## The Modeling Process
+# Conclusions
+----
+#### Profit of iBuyer companies rely on selling real estate properties at higher prices than the prices that the properties were bought. In such cases, accurate predictions of housing property market prices are key in securing profit from the real estate transactions. This project seeks to explore the various features of housing properties and find out which features can most accurately predict the housing sales prices, specifically for Ames, IA.
+----
+This project aims to build a reliable model for predicting the housing price that can be used to profit from real estate investment for iBuyer companies. Making use of 21 housing features total, I was able to build a prediction model with R-Squared value of about 0.9, which means that about 90% of the instances fit the model, given the 21 features that were used. The model had higher variance than bias, which indicates that it was more overfit to the training data. As this is a predictive model, I may have to work towards less variance, possibly by reducing the features by even more. 
 
-1. The train dataset has all of the columns that you will need to generate and refine your models. The test dataset has all of those columns except for the target that you are trying to predict in your Regression model.
-2. Generate your regression model using the training data. We expect that within this process, you'll be making use of:
-    - train-test split
-    - cross-validation / grid searching for hyperparameters
-    - strong exploratory data analysis to question correlation and relationship across predictive variables
-    - code that reproducibly and consistently applies feature transformation (such as the preprocessing library)
-3. Predict the values for your target column in the test dataset and submit your predictions to Kaggle to see how your model does against unknown data.
-    - **Note**: Kaggle expects to see your submissions in a specific format. Check the challenge's page to make sure you are formatting your CSVs correctly!
-    - **You are limited to models you've learned in class**. In other words, you cannot use XGBoost, Neural Networks or any other advanced model for this project.
-4. Evaluate your models!
-    - consider your evaluation metrics
-    - consider your baseline score
-    - how can your model be used for inference?
-    - why do you believe your model will generalize to new data?
-
-## Submission
-
-Materials must be submitted by the beginning of class on the specified date.
-
-The last day for the Kaggle competition will be the specified date in your lesson schedule.
-
-Your technical report will be hosted on Github Enterprise. Make sure it includes:
-
-- A README.md (that isn't this file)
-- Jupyter notebook(s) with your analysis and models (renamed to describe your project)
-- At least one successful prediction submission on [DSIR-222 Regression Challenge](https://www.kaggle.com/c/222-flex-ames/) --  you should see your name in the "[Leaderboard](https://www.kaggle.com/competitions/222-flex-ames/leaderboard)" tab.
-- Data files
-- Presentation slides
-- Any other necessary files (images, etc.)
-
-**Check with your local instructor for how they would like you to submit your repo for review.**
-
----
-
-## Presentation Structure
-
-- **You will have 10 minutes for your presentation.**
-- Use Google Slides or some other visual aid (Keynote, Powerpoint, etc).
-- Consider the audience. This presentation should be **non-technical**.
-- Start with the **data science problem**.
-- Use visuals that are appropriately scaled and interpretable.
-- Talk about your procedure/methodology (high level).
-- Talk about your primary findings.
-- Make sure you provide **clear recommendations** that follow logically from your analyses and narrative and answer your data science problem.
-
-Be sure to rehearse and time your presentation before class.
-
----
-
-## Rubric
-Your local instructor will evaluate your project (for the most part) using the following criteria.  You should make sure that you consider and/or follow most if not all of the considerations/recommendations outlined below **while** working through your project.
-
-**Scores will be out of 27 points based on the 9 items in the rubric.** <br>
-*3 points per section*<br>
-
-| Score | Interpretation |
-| --- | --- |
-| **0** | *Project fails to meet the minimum requirements for this item.* |
-| **1** | *Project meets the minimum requirements for this item, but falls significantly short of portfolio-ready expectations.* |
-| **2** | *Project exceeds the minimum requirements for this item, but falls short of portfolio-ready expectations.* |
-| **3** | *Project meets or exceeds portfolio-ready expectations; demonstrates a thorough understanding of every outlined consideration.* |
-
-### The Data Science Process
-
-**Problem Statement**
-- Is it clear what the student plans to do?
-- What type of model will be developed?
-- How will success be evaluated?
-- Is the scope of the project appropriate?
-- Is it clear who cares about this or why this is important to investigate?
-- Does the student consider the audience and the primary and secondary stakeholders?
-
-**Data Cleaning and EDA**
-- Are missing values imputed appropriately?
-- Are distributions examined and described?
-- Are outliers identified and addressed?
-- Are appropriate summary statistics provided?
-- Are steps taken during data cleaning and EDA framed appropriately?
-- Does the student address whether or not they are likely to be able to answer their problem statement with the provided data given what they've discovered during EDA?
-
-**Preprocessing and Modeling**
-- Are categorical variables one-hot encoded?
-- Does the student investigate or manufacture features with linear relationships to the target?
-- Have the data been scaled appropriately?
-- Does the student properly split and/or sample the data for validation/training purposes?
-- Does the student utilize feature selection to remove noisy or multi-collinear features?
-- Does the student test and evaluate a variety of models to identify a production algorithm (**AT MINIMUM:** linear regression, lasso, and ridge)?
-- Does the student defend their choice of production model relevant to the data at hand and the problem?
-- Does the student explain how the model works and evaluate its performance successes/downfalls?
-
-**Evaluation and Conceptual Understanding**
-- Does the student accurately identify and explain the baseline score?
-- Does the student select and use metrics relevant to the problem objective?
-- Is more than one metric utilized in order to better assess performance?
-- Does the student interpret the results of their model for purposes of inference?
-- Is domain knowledge demonstrated when interpreting results?
-- Does the student provide appropriate interpretation with regards to descriptive and inferential statistics?
-
-**Conclusion and Recommendations**
-- Does the student provide appropriate context to connect individual steps back to the overall project?
-- Is it clear how the final recommendations were reached?
-- Are the conclusions/recommendations clearly stated?
-- Does the conclusion answer the original problem statement?
-- Does the student address how findings of this research can be applied for the benefit of stakeholders?
-- Are future steps to move the project forward identified?
-
-### Organization and Professionalism
-
-**Project Organization**
-- Are modules imported correctly (using appropriate aliases)?
-- Are data imported/saved using relative paths?
-- Does the README provide a good executive summary of the project?
-- Is markdown formatting used appropriately to structure notebooks?
-- Are there an appropriate amount of comments to support the code?
-- Are files & directories organized correctly?
-- Are there unnecessary files included?
-- Do files and directories have well-structured, appropriate, consistent names?
-
-**Visualizations**
-- Are sufficient visualizations provided?
-- Do plots accurately demonstrate valid relationships?
-- Are plots labeled properly?
-- Are plots interpreted appropriately?
-- Are plots formatted and scaled appropriately for inclusion in a notebook-based technical report?
-
-**Python Syntax and Control Flow**
-- Is care taken to write human readable code?
-- Is the code syntactically correct (no runtime errors)?
-- Does the code generate desired results (logically correct)?
-- Does the code follows general best practices and style guidelines?
-- Are Pandas functions used appropriately?
-- Are `sklearn` methods used appropriately?
-
-**Presentation**
-- Is the problem statement clearly presented?
-- Does a strong narrative run through the presentation building toward a final conclusion?
-- Are the conclusions/recommendations clearly stated?
-- Is the level of technicality appropriate for the intended audience?
-- Is the student substantially over or under time?
-- Does the student appropriately pace their presentation?
-- Does the student deliver their message with clarity and volume?
-- Are appropriate visualizations generated for the intended audience?
-- Are visualizations necessary and useful for supporting conclusions/explaining findings?
-
-In order to pass the project, students must earn a minimum score of 1 for each category.
-- Earning below a 1 in one or more of the above categories would result in a failing project.
-- While a minimum of 1 in each category is the required threshold for graduation, students should aim to earn at least an average of 1.5 across each category. An average score below 1.5, while it may be passing, means students may want to solicit specific feedback in order to significantly improve the project before showcasing it as part of a portfolio or the job search.
-
-### REMEMBER:
-
-This is a learning environment and you are encouraged to try new things, even if they don't work out as well as you planned! While this rubric outlines what we look for in a _good_ project, it is up to you to go above and beyond to create a _great_ project. **Learn from your failures and you'll be prepared to succeed in the workforce**.
+Also going forward, it might be helpful to examine external features that affect housing prices. Housing sales price depends not only on the internal qualities of houses, but more so on the external factors of the economy. Extra steps to connsider economic factors such as supply, demand, and the inflation will most certainly be needed in order to more accurately predict the sales price of houses. 
